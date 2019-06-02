@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a:link,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+body {
+  color: #414141;
+  background-color: /*#aec6cf*/ #f7f8f9;
+  font-family: "Helvetica", "Arial", sans-serif;
+}
+
+@keyframes ripen {
+  0%{
+    background-color: #9DC183;
+  }
+  100% {
+    background-color: #fe0000ff;
+  }
+}
+
+.header {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+  padding: 20px;
+  background-color: #414141;
+  color: white;
+}
+
+.menu {
+  position: relative;
+}
+
+.dropdown > span {
+  z-index: 2;
+  position: relative;
+  cursor: pointer;
+}
+
+.features-menu {
+  display: none;
+}
+
+.dropdown:hover .features-menu {
+  display: flex;
+  flex-direction: column;
+  background: #414141;
+  border-radius: 5px;
+  padding-top: 60px;
+  top: 0;
+  left: -20px;
+  position: absolute;
+  z-index: 1;
+}
+
+.features-menu li {
+  list-style: none;
+  border-bottom: 1px solid #FFF;
+
+  padding: 0 40px 10px 20px;
+  margin: 10px;
+}
+
+.features-menu li:last-of-type {
+  border-bottom: none;
+}
+
+
+.content {
+  height: 500px;
+  width: 650px;
+  padding-top:100px;
+  margin: 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  padding: 15px;
+  font-weight: normal;
+  text-align: center;
+}
+
+p {
+  text-align: left;
+  padding: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.timer-container {
+  display:flex;
+}
+
+.timer {
+  display: flex;
+  align-items:center;
+  margin: 20px auto;
+}
+
+.tomato-container {
+  display: flex;
+  justify-content: center;
+
+}
+
+.tomato {
+  border: 1px solid #fff;
+  width: 400px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.fruit {
+  -webkit-backface-visibility: hidden;
+  animation-name: ripen;
+  animation-duration: 1500s;
+  animation-timing-function: ease-out;
+  animation-delay: 0s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  animation-play-state: running;
+  position: absolute;
+  top: 150px;
+  width: 290px;
+  height: 290px;
+  background-color: #fe0000ff;
+  border-radius: 50%;
+  z-index: -2;
+}
+
+.stem {
+  position: absolute;
+  bottom: 250px;
+  z-index: -1;
+}

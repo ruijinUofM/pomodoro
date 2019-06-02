@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+var minutes = 5;
+var seconds = 0;
+function startTime() {
+   if (seconds < 10) {
+      document.getElementById("txt").innerHTML = minutes + ":0" + seconds;
+   }
+   else {
+      document.getElementById("txt").innerHTML = minutes + ":" + seconds;
+   }
+   updateTime();
+}
+function updateTime() {
+   if (seconds == 0) {
+      seconds = 59;
+      --minutes;
+   }
+   else {
+      --seconds;
+   }
+}
+</script>
+</head>
+
+<body onload="setInterval(startTime, 1000)">
+
+<div id="txt">Start Me Bois</div>
+
+</body>
+</html>
