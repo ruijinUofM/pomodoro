@@ -17,14 +17,46 @@ body {
   color: #414141;
   background-color: /*#aec6cf*/ #f7f8f9;
   font-family: "Helvetica", "Arial", sans-serif;
+  overflow: hidden;
+}
+
+@keyframes fruitfall {
+  0% {
+    top: 150px;
+  }
+  100% {
+    top: 1000px;
+  }
 }
 
 @keyframes ripen {
-  0%{
-    background-color: #9DC183;
+  0% {
+    background-color: #fce13d;
   }
   100% {
-    background-color: #fe0000ff;
+    background-color: #fe0000;
+  }
+}
+
+@keyframes grow {
+  0% {
+    background-color: #6dac4fff;
+    top:150px;
+    transform:scale(0);
+  }
+  100% {
+    background-color: #fce13d;
+    transform: scale(1);
+  }
+}
+
+@keyframes opaque {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
 
@@ -37,6 +69,7 @@ body {
   padding: 20px;
   background-color: #414141;
   color: white;
+  z-index:3
 }
 
 .menu {
@@ -44,7 +77,7 @@ body {
 }
 
 .dropdown > span {
-  z-index: 2;
+  z-index: 4;
   position: relative;
   cursor: pointer;
 }
@@ -102,12 +135,11 @@ a {
 
 .timer-container {
   display:flex;
+  justify-content:center;
 }
 
-.timer {
-  display: flex;
-  align-items:center;
-  margin: 20px auto;
+#timer {
+  padding: 10px;
 }
 
 .tomato-container {
@@ -126,27 +158,31 @@ a {
   position: relative;
 }
 
-.fruit {
-  -webkit-backface-visibility: hidden;
-  animation-name: ripen;
-  animation-duration: 1500s;
-  animation-timing-function: ease-out;
-  animation-delay: 0s;
-  animation-direction: alternate;
-  animation-iteration-count: infinite;
-  animation-fill-mode: none;
-  animation-play-state: running;
+#fruit {
+  animation:
+    ripen
+    3s
+    ease-out
+    0s
+    alternate
+    none
+    running,
+    opaque
+    3s
+    ease-out;
+
+  transform-origin: 50% 12%;
   position: absolute;
   top: 150px;
   width: 290px;
   height: 290px;
-  background-color: #fe0000ff;
+  background-color: #fe0000;
   border-radius: 50%;
-  z-index: -2;
+  z-index: 1;
 }
 
 .stem {
   position: absolute;
   bottom: 250px;
-  z-index: -1;
+  z-index: 2;
 }

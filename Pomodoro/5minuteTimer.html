@@ -14,12 +14,14 @@ function startTime() {
    updateTime();
 }
 function updateTime() {
-   if (seconds == 0) {
-      seconds = 59;
-      --minutes;
+  if (minutes == 0 && seconds == 0) {
+  }
+  else if (seconds == 0) {
+    seconds = 59;
+    --minutes;
    }
    else {
-      --seconds;
+    --seconds;
    }
 }
 </script>

@@ -4,8 +4,36 @@
     <meta charset='UTF-8'/>
     <title>pomodoro.</title>
     <link rel='stylesheet' href='tomatocss.css'/>
+    <script>
+    var clickChoose = 0;
+    var minutes = 5;
+    var seconds = 0;
+    function startTime() {
+       if (seconds < 10) {
+          document.getElementById("timer").innerHTML = minutes + ":0" + seconds;
+       }
+       else {
+          document.getElementById("timer").innerHTML = minutes + ":" + seconds;
+       }
+       updateTime();
+    }
+
+    function updateTime() {
+      if (minutes == 0 && seconds == 0) {
+        clearInterval(timerrep);
+      }
+      else if (seconds == 0) {
+        seconds = 59;
+        --minutes;
+       }
+       else {
+        --seconds;
+       }
+    }
+
+    </script>
   </head>
-  <body>
+  <body onload="var timerrep = setInterval(startTime, 1000)">
     <div class='header'>
       <div class='menu'>
         <div class='dropdown'><span>menu. &#9662;</span>
@@ -20,14 +48,38 @@
       <div class='tomato'>
         <div class='stem'><img src='method-draw-image (4).svg'/></div>
 
-        <div class='fruit'></div>
+        <div id = 'fruit'></div>
 
       </div>
     </div>
     <div class='timer-container'>
-      <div class = 'timer'>
+      <div id = 'timer'>
         Tap the tomato to begin
       </div>
     </div>
+    <script>
+
+      var fruit = document.getElementById("fruit");
+
+      function fruitDrop() {
+        fruit.style.animation = "fruitfall 1s ease-in forwards";
+        window.setTimeout(reset, 1200);
+      }
+
+      function reset() {
+        fruit.style.animation = "grow 2s ease-in forwards";
+      }
+
+      function fChoose() {
+        if (clickChoose % 2 == 0) {
+          fruitDrop();
+          clickChoose++;
+        }
+        else {
+        }
+      }
+
+      fruit.addEventListener("click", fChoose);
+    </script>
   </body>
 </html>
