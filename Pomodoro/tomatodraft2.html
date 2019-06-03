@@ -5,18 +5,25 @@
     <title>pomodoro.</title>
     <link rel='stylesheet' href='tomatocss.css'/>
     <script>
+    var timerInterval;
     var clickChoose = 0;
-    var minutes = 5;
+    var minutes = 25;
     var seconds = 0;
+    var pomodoros = 0;
+    var breakTime = false;
+    var startStop = true;
     function startTime() {
-       if (seconds < 10) {
-          document.getElementById("timer").innerHTML = minutes + ":0" + seconds;
-       }
-       else {
-          document.getElementById("timer").innerHTML = minutes + ":" + seconds;
-       }
-       updateTime();
-    }
+
+      document.getElementById("minutesNum").innerHTML = minutes;
+      if (seconds < 10) {
+        document.getElementById("secondsNum").innerHTML = "0" + seconds;
+      }
+      else {
+        document.getElementById("secondsNum").innerHTML = seconds;
+      }
+
+      updateTime();
+     }
 
     function updateTime() {
       if (minutes == 0 && seconds == 0) {
@@ -33,7 +40,7 @@
 
     </script>
   </head>
-  <body onload="var timerrep = setInterval(startTime, 1000)">
+  <body>
     <div class='header'>
       <div class='menu'>
         <div class='dropdown'><span>menu. &#9662;</span>
@@ -53,21 +60,76 @@
       </div>
     </div>
     <div class='timer-container'>
+      <script>
+        function frontZero(digit) {
+          if(digit.value.length == 1) {
+            digit.value = '0' + digit.value;
+          }
+        }
+      </script>
       <div id = 'timer'>
-        Tap the tomato to begin
+        <input type = "number" name = "minutes" id = "minutes" min = "0" max = "60" value = "25">
+        :
+        <input type = "number" name = "seconds" id = "seconds" min = "0" max = "59" value="00"
+           onchange="frontZero(this)" onkeyup="frontZero(this)" onclick="frontZero(this)">
+      </div>
+
+      <div id = 'timerDisplay'>
+        <div class = "timerNum" id = "minutesNum"></div>
+        :
+        <div class = "timerNum" id = "secondsNum"></div>
       </div>
     </div>
+    <div id = "control">
+      Start
+    </div>
     <script>
+      var control = document.getElementById("control");
+
+      control.addEventListener("click", function()
+        {
+          if (startStop) {
+            minutes = document.getElementById('minutes').value;
+            seconds = document.getElementById('seconds').value;
+            if(seconds.length >= 3) {
+              seconds = seconds.substring(seconds.length - 2, seconds.length);
+            }
+
+            if(seconds.substring(0,1) == "0") {
+              seconds = seconds.substring(1,2);
+            }
+
+            timerInterval = setInterval(startTime, 1000);
+            startStop = false;
+            control.innerHTML = "Pause";
+            document.getElementById('timer').style.zIndex = '-1';
+          }
+          else {
+            document.getElementById('minutes').value = minutes;
+            document.getElementById('seconds').value = seconds;
+            clearInterval(timerInterval);
+            startStop = true;
+            control.innerHTML = "Start";
+            document.getElementById('timer').style.zIndex = '1';
+          }
+        }
+      );
+
 
       var fruit = document.getElementById("fruit");
 
       function fruitDrop() {
         fruit.style.animation = "fruitfall 1s ease-in forwards";
-        window.setTimeout(reset, 1200);
+        window.setTimeout(grow, 1200);
+        window.setTimout(reset,1200);
+      }
+
+      function grow() {
+        fruit.style.animation = "grow 2s ease-in forwards";
       }
 
       function reset() {
-        fruit.style.animation = "grow 2s ease-in forwards";
+        fruit.style.animation = "";
       }
 
       function fChoose() {

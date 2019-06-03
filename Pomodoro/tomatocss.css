@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -16,7 +18,7 @@ a:hover {
 body {
   color: #414141;
   background-color: /*#aec6cf*/ #f7f8f9;
-  font-family: "Helvetica", "Arial", sans-serif;
+  font-family: "Lato", "Arial", sans-serif;
   overflow: hidden;
 }
 
@@ -69,7 +71,7 @@ body {
   padding: 20px;
   background-color: #414141;
   color: white;
-  z-index:3
+  z-index: 4;
 }
 
 .menu {
@@ -77,7 +79,7 @@ body {
 }
 
 .dropdown > span {
-  z-index: 4;
+  z-index: 5;
   position: relative;
   cursor: pointer;
 }
@@ -134,12 +136,54 @@ a {
 }
 
 .timer-container {
+  padding: 10px;
   display:flex;
   justify-content:center;
 }
 
 #timer {
-  padding: 10px;
+  width: 300px;
+  height: 120px;
+  font-size: 90px;
+  display: flex;
+  text-align:center;
+  justify-content:center;
+  align-items: center;
+  z-index: 1;
+}
+
+#timerDisplay {
+  position:absolute;
+  width: 300px;
+  height: 120px;
+  font-size: 90px;
+  display: flex;
+  text-align:center;
+  justify-content:center;
+  align-items: center;
+}
+
+input[type='number'] {
+  border: 2px solid #414141;
+  font-size: 90px;
+  height: 100px;
+  width: 125px;
+  text-align: center;
+  background-color: #f7f8f9;
+  color: #414141;
+  border-radius: 10px;
+  font-family: "Lato", "Arial", sans-serif;
+}
+
+.timerNum {
+  border: 2px solid #414141;
+  font-size: 90px;
+  height: 100px;
+  width: 125px;
+  text-align: center;
+  background-color: #f7f8f9;
+  color: #414141;
+  border-radius: 10px;
 }
 
 .tomato-container {
@@ -149,7 +193,6 @@ a {
 }
 
 .tomato {
-  border: 1px solid #fff;
   width: 400px;
   height: 500px;
   display: flex;
@@ -164,12 +207,11 @@ a {
     3s
     ease-out
     0s
-    alternate
-    none
-    running,
+    forwards,
     opaque
     3s
-    ease-out;
+    ease-out
+    forwards;
 
   transform-origin: 50% 12%;
   position: absolute;
@@ -178,11 +220,11 @@ a {
   height: 290px;
   background-color: #fe0000;
   border-radius: 50%;
-  z-index: 1;
+  z-index: 2;
 }
 
 .stem {
   position: absolute;
   bottom: 250px;
-  z-index: 2;
+  z-index: 3;
 }
