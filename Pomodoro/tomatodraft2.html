@@ -4,41 +4,6 @@
     <meta charset='UTF-8'/>
     <title>pomodoro.</title>
     <link rel='stylesheet' href='tomatocss.css'/>
-    <script>
-    var timerInterval;
-    var clickChoose = 0;
-    var minutes = 25;
-    var seconds = 0;
-    var pomodoros = 0;
-    var breakTime = false;
-    var startStop = true;
-    function startTime() {
-
-      document.getElementById("minutesNum").innerHTML = minutes;
-      if (seconds < 10) {
-        document.getElementById("secondsNum").innerHTML = "0" + seconds;
-      }
-      else {
-        document.getElementById("secondsNum").innerHTML = seconds;
-      }
-
-      updateTime();
-     }
-
-    function updateTime() {
-      if (minutes == 0 && seconds == 0) {
-        clearInterval(timerrep);
-      }
-      else if (seconds == 0) {
-        seconds = 59;
-        --minutes;
-       }
-       else {
-        --seconds;
-       }
-    }
-
-    </script>
   </head>
   <body>
     <div class='header'>
@@ -51,41 +16,114 @@
         </div>
       </div>
     </div>
-    <div class='tomato-container'>
-      <div class='tomato'>
-        <div class='stem'><img src='method-draw-image (4).svg'/></div>
+    <div class = 'contentContainer'>
+      <div class='tomato-container'>
+        <div class='tomato'>
+          <div class='stem'><img src='method-draw-image (4).svg'/></div>
 
-        <div id = 'fruit'></div>
+          <div id = 'fruit'></div>
 
+        </div>
       </div>
-    </div>
-    <div class='timer-container'>
-      <script>
-        function frontZero(digit) {
-          if(digit.value.length == 1) {
-            digit.value = '0' + digit.value;
+      <div class='timer-container'>
+        <div id = "pomodoroCount">
+          pomodoros:
+        </div>
+        <script>
+          function frontZero(digit) {
+            if(digit.value.length == 1) {
+              digit.value = '0' + digit.value;
+            }
           }
-        }
-      </script>
-      <div id = 'timer'>
-        <input type = "number" name = "minutes" id = "minutes" min = "0" max = "60" value = "25">
-        :
-        <input type = "number" name = "seconds" id = "seconds" min = "0" max = "59" value="00"
-           onchange="frontZero(this)" onkeyup="frontZero(this)" onclick="frontZero(this)">
-      </div>
+        </script>
+        <div id = 'timer'>
+          <input type = "number" name = "minutes" id = "minutes" min = "0" max = "60" value = "25">
+          :
+          <input type = "number" name = "seconds" id = "seconds" min = "0" max = "59" value="00"
+             onchange="frontZero(this)" onkeyup="frontZero(this)" onclick="frontZero(this)">
+        </div>
 
-      <div id = 'timerDisplay'>
-        <div class = "timerNum" id = "minutesNum"></div>
-        :
-        <div class = "timerNum" id = "secondsNum"></div>
+        <div id = 'timerDisplay' >
+          <div class = "timerNum" id = "minutesNum"></div>
+          :
+          <div class = "timerNum" id = "secondsNum"></div>
+        </div>
+
+        <div id = "control">
+          Start
+        </div>
+
+        <div id = "rest">
+          Work
+        </div>
+
       </div>
-    </div>
-    <div id = "control">
-      Start
     </div>
     <script>
-      var control = document.getElementById("control");
 
+      var control = document.getElementById("control");
+      var timerInterval;
+      var clickChoose = 0;
+      var minutes = 25;
+      var seconds = 0;
+      var pomodoros = 0;
+      var breakTime = false;
+      var startStop = true;
+
+      function breakTimeReset() {
+        if (breakTime) {
+          document.getElementById('rest').innerHTML = "Break";
+        }
+        else {
+          document.getElementById('rest').innerHTML = "Work";
+        }
+      }
+
+      function startTime() {
+        updateTime();
+        document.getElementById("minutesNum").innerHTML = minutes;
+        if (seconds < 10) {
+          document.getElementById("secondsNum").innerHTML = "0" + seconds;
+        }
+        else {
+          document.getElementById("secondsNum").innerHTML = seconds;
+        }
+       }
+
+      function updateTime() {
+        if (minutes == 0 && seconds == 0) {
+          clearInterval(timerInterval);
+
+          breakTime = !breakTime;
+          breakTimeReset();
+          startStop = true;
+          control.innerHTML = "Start";
+          if (breakTime) {
+
+            if (++pomodoros == 4) {
+              minutes = 15;
+            }
+            else {
+              minutes = 3;
+            }
+          }
+          else {
+            minutes = 25;
+          }
+          document.getElementById('minutes').value = minutes;
+          document.getElementById('seconds').value = "00";
+
+          document.getElementById('timer').style.zIndex = '1';
+
+        }
+        else if (seconds == 0) {
+          seconds = 59;
+          --minutes;
+         }
+         else {
+          --seconds;
+         }
+      }
       control.addEventListener("click", function()
         {
           if (startStop) {
@@ -98,7 +136,7 @@
             if(seconds.substring(0,1) == "0") {
               seconds = seconds.substring(1,2);
             }
-
+            startTime();
             timerInterval = setInterval(startTime, 1000);
             startStop = false;
             control.innerHTML = "Pause";
@@ -106,7 +144,12 @@
           }
           else {
             document.getElementById('minutes').value = minutes;
-            document.getElementById('seconds').value = seconds;
+            if(seconds < 10) {
+              document.getElementById('seconds').value = '0' + seconds;
+            }
+            else {
+              document.getElementById('seconds').value = seconds;
+            }
             clearInterval(timerInterval);
             startStop = true;
             control.innerHTML = "Start";

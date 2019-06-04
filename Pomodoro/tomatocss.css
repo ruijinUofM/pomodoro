@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato:300&display=swap');
 
 * {
   margin: 0;
@@ -19,7 +19,13 @@ body {
   color: #414141;
   background-color: /*#aec6cf*/ #f7f8f9;
   font-family: "Lato", "Arial", sans-serif;
-  overflow: hidden;
+
+}
+
+.contentContainer {
+  height: 800px;
+  position: relative;
+  overflow:hidden;
 }
 
 @keyframes fruitfall {
@@ -136,29 +142,45 @@ a {
 }
 
 .timer-container {
+  width: 450px;
+  position: relative;
   padding: 10px;
   display:flex;
   justify-content:center;
+  margin: auto;
+}
+
+#pomodoroCount {
+  position: absolute;
+  left: -200px;
+  top: 50px;
+  font-size: 40px;
+  height: 60px;
+  width: 280px;
+  border-radius: 5px;
+  background-color: #414141;
+  color: #f7f8f9;
+  text-align: left;
 }
 
 #timer {
+  position: absolute;
   width: 300px;
   height: 120px;
   font-size: 90px;
   display: flex;
-  text-align:center;
+
   justify-content:center;
   align-items: center;
   z-index: 1;
 }
 
 #timerDisplay {
-  position:absolute;
+  position: absolute;
   width: 300px;
   height: 120px;
   font-size: 90px;
   display: flex;
-  text-align:center;
   justify-content:center;
   align-items: center;
 }
@@ -168,11 +190,38 @@ input[type='number'] {
   font-size: 90px;
   height: 100px;
   width: 125px;
-  text-align: center;
+  text-align: justify;
   background-color: #f7f8f9;
   color: #414141;
   border-radius: 10px;
   font-family: "Lato", "Arial", sans-serif;
+}
+
+#control {
+  position: absolute;
+  left: 380px;
+  top: 20px;
+  font-size: 40px;
+  height: 45px;
+  width: 120px;
+  border-radius: 5px;
+  background-color: #414141;
+  color: #f7f8f9;
+  text-align: center;
+
+}
+
+#rest {
+  position: absolute;
+  left: 380px;
+  top: 75px;
+  font-size: 40px;
+  height: 45px;
+  width: 120px;
+  border-radius: 5px;
+  background-color: #414141;
+  color: #f7f8f9;
+  text-align: center;
 }
 
 .timerNum {
@@ -180,10 +229,11 @@ input[type='number'] {
   font-size: 90px;
   height: 100px;
   width: 125px;
-  text-align: center;
+  text-align: justify;
   background-color: #f7f8f9;
   color: #414141;
   border-radius: 10px;
+  line-height: 1.07;
 }
 
 .tomato-container {
