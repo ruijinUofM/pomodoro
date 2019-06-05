@@ -48,7 +48,7 @@ body {
 
 @keyframes grow {
   0% {
-    background-color: #6dac4fff;
+    background-color: #6dac4f;
     top:150px;
     transform:scale(0);
   }
@@ -57,6 +57,7 @@ body {
     transform: scale(1);
   }
 }
+
 
 @keyframes opaque {
   0% {
@@ -120,9 +121,9 @@ body {
 
 
 .content {
-  height: 500px;
   width: 650px;
   padding-top:100px;
+  padding-bottom:100px;
   margin: 0 auto;
 }
 
@@ -148,6 +149,11 @@ a {
   display:flex;
   justify-content:center;
   margin: auto;
+  animation:
+    opaque
+    1s
+    ease-out
+    forwards;
 }
 
 #pomodoroCount {
@@ -185,11 +191,39 @@ a {
   align-items: center;
 }
 
-input[type='number'] {
+#pomodoroDisplay {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  right: 10px;
+  top: 5px;
+  font-size: 45px;
   border: 2px solid #414141;
+  text-align: justify;
+  background-color: #f7f8f9;
+  color: #414141;
+  border-radius: 10px;
+  line-height: 1.03;
+}
+
+#pomodoroControl {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  right: 10px;
+  top: 5px;
+  font-size: 45px;
+  z-index: 1;
+}
+
+#seconds, #minutes {
   font-size: 90px;
   height: 100px;
   width: 125px;
+}
+
+input[type='number'] {
+  border: 2px solid #414141;
   text-align: justify;
   background-color: #f7f8f9;
   color: #414141;
@@ -198,6 +232,7 @@ input[type='number'] {
 }
 
 #control {
+  cursor: pointer;
   position: absolute;
   left: 380px;
   top: 20px;
@@ -212,6 +247,7 @@ input[type='number'] {
 }
 
 #rest {
+  cursor: pointer;
   position: absolute;
   left: 380px;
   top: 75px;
@@ -253,11 +289,6 @@ input[type='number'] {
 
 #fruit {
   animation:
-    ripen
-    3s
-    ease-out
-    0s
-    forwards,
     opaque
     3s
     ease-out
@@ -268,12 +299,13 @@ input[type='number'] {
   top: 150px;
   width: 290px;
   height: 290px;
-  background-color: #fe0000;
+  background-color: #fce13d;
   border-radius: 50%;
   z-index: 2;
 }
 
 .stem {
+
   position: absolute;
   bottom: 250px;
   z-index: 3;
