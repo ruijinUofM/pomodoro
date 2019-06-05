@@ -10,8 +10,9 @@
     <div class='page'>
       <div class='header'>
         <div class='menu'>
-          <div class='dropdown'><span>menu &#9662;</span>
-            <ul class='features-menu'>
+          <div class='dropdown'>
+            <span id = 'dropdown'>menu &#9662;</span>
+            <ul class='features-menu' id = 'features-menu'>
               <li><a href='tomatoh.html'>about</a></li>
               <li><a href='tomatodraft2.html'>get started</a></li>
               <li><a href="https://github.com/ruijinUofM/pomodoro">github</a></li>
@@ -19,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div class='content'>
+      <div class='content' id = 'content'>
         <h1> pomodoro </h1>
         <hr>
         <h2> <a href='tomatodraft2.html'> get started </a> </h2>
@@ -54,5 +55,21 @@
           is the light version of lato from google fonts. Anyway, thank you for checking this out!
       </div>
     </div>
+    <script>
+      var menuShow = true;
+      document.getElementById('dropdown').addEventListener("click", function() {
+        if (menuShow) {
+          document.getElementById('features-menu').style.display = 'flex';
+        }
+        else {
+          document.getElementById('features-menu').style.display = 'none';
+        }
+        menuShow = !menuShow;
+      });
+      document.getElementById('content').addEventListener("click", function() {
+        document.getElementById('features-menu').style.display = 'none';
+        menuShow = true;
+      });
+    </script>
   </body>
 </html>

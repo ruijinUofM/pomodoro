@@ -91,12 +91,6 @@ body {
 
 .features-menu {
   display: none;
-}
-
-.dropdown:hover .features-menu,
-.dropdown:focus .features-menu,
-.dropdown:active .features-menu{
-  display: flex;
   flex-direction: column;
   background: #414141;
   border-radius: 5px;
@@ -105,6 +99,10 @@ body {
   left: -20px;
   position: absolute;
   z-index: 1;
+}
+
+.dropdown:hover .features-menu {
+  display: flex;
 }
 
 .features-menu li {

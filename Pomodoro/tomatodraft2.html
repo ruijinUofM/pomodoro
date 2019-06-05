@@ -8,8 +8,9 @@
   <body onclick="frontZero(document.getElementById('seconds'))">
     <div class='header'>
       <div class='menu'>
-        <div class='dropdown'><span>menu &#9662;</span>
-          <ul class='features-menu'>
+        <div class='dropdown'>
+          <span id = 'dropdown'>menu &#9662;</span>
+          <ul class='features-menu' id = 'features-menu'>
             <li><a href='tomatoh.html'>about</a></li>
             <li><a href='tomatodraft2.html'>get started</a></li>
             <li><a href="https://github.com/ruijinUofM/pomodoro">github</a></li>
@@ -17,7 +18,7 @@
         </div>
       </div>
     </div>
-    <div class = 'contentContainer'>
+    <div class = 'contentContainer' id = "content">
       <div class='tomato-container'>
         <div class='tomato'>
           <div class='stem'><img src='method-draw-image (4).svg'/></div>
@@ -45,7 +46,7 @@
           <input type = "number" name = "minutes" id = "minutes" min = "0" max = "60" value = "25">
           :
           <input type = "number" name = "seconds" id = "seconds" min = "0" max = "59" value="00"
-            onchange="leadingZeros(this)" onclick="frontZero(this)">
+            onclick="frontZero(this)">
         </div>
 
         <div id = 'timerDisplay' >
@@ -233,6 +234,20 @@
         updateTime();
       });
 
+      var menuShow = true;
+      document.getElementById('dropdown').addEventListener("click", function() {
+        if (menuShow) {
+          document.getElementById('features-menu').style.display = 'flex';
+        }
+        else {
+          document.getElementById('features-menu').style.display = 'none';
+        }
+        menuShow = !menuShow;
+      });
+      document.getElementById('content').addEventListener("click", function() {
+        document.getElementById('features-menu').style.display = 'none';
+        menuShow = true;
+      });
     </script>
   </body>
 </html>
