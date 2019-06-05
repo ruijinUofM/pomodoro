@@ -45,7 +45,7 @@
           <input type = "number" name = "minutes" id = "minutes" min = "0" max = "60" value = "25">
           :
           <input type = "number" name = "seconds" id = "seconds" min = "0" max = "59" value="00"
-             onchange="frontZero(this)" onkeyup="frontZero(this)" onclick="frontZero(this)">
+            onclick="frontZero(this)">
         </div>
 
         <div id = 'timerDisplay' >
@@ -75,7 +75,7 @@
       var startStop = true;
       var fruit = document.getElementById("fruit");
       var dropCount = false;
-
+      var natural = true;
       function fruitRipen(x) {
         reset();
         fruit.style.animation = "ripen " + x + "s ease-in forwards";
@@ -83,7 +83,7 @@
 
       function fruitDrop() {
         if (!dropCount) {
-          fruit.style.animation += ", fruitfall .5s ease-in forwards";
+          fruit.style.animation += ", fruitfall 1s ease-in forwards";
           dropCount = true;
         }
       }
@@ -94,10 +94,13 @@
       }
 
       function pause() {
-        fruitDrop();
-        if(!breakTime) {
+        if(!natural || breakTime) {
+          fruitDrop();
+        }
+        if(!breakTime && !natural) {
           setTimeout(grow, 500, 1);
         }
+          natural = true;
       }
 
       function reset() {
@@ -144,8 +147,10 @@
 
           breakTime = !breakTime;
           breakTimeReset();
+
           startStop = true;
           pause();
+
           control.innerHTML = "Start";
           if (breakTime) {
             if (++pomodoroCounter == 4) {
@@ -203,6 +208,7 @@
           }
 
           else {
+            natural = false;
             pause();
             document.getElementById('minutes').value = minutes;
             if(seconds < 10) {
@@ -223,6 +229,7 @@
       document.getElementById("rest").addEventListener("click", function() {
         minutes = 0;
         seconds = 0;
+        natural = false;
         updateTime();
       });
 
