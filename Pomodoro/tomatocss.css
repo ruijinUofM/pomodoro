@@ -20,7 +20,7 @@ body {
 }
 
 .contentContainer {
-  height: 800px;
+  height: 1100px;
   position: relative;
   overflow:hidden;
 }
@@ -138,6 +138,18 @@ p {
 
 a {
   text-decoration: none;
+}
+
+#instructionsWrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+#instructions {
+  position: absolute;
+  top: 150px;
+  width: 500px;
 }
 
 .timer-container {
