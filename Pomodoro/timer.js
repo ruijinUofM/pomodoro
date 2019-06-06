@@ -218,7 +218,7 @@ function checkUserInput() {
   if (pomodoroCounter < 0) {
     pomodoroCounter = 0;
   }
-  if (minutes == 0 && seconds == 0 && pomodoroCounter == 0) {
+  if (minutes == 0 && seconds == 0) {
     seconds = 1;
   }
   document.getElementById('pomodoroDisplay').innerHTML = pomodoroCounter;
