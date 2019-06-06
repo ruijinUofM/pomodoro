@@ -4,7 +4,7 @@ var minutes = 25;
 var seconds = 0;
 var pomodoroCounter = 0;
 var breakTime = false;
-var startStop = true;
+var currentlyPaused = true;
 var fruit = document.getElementById("fruit");
 var dropCount = false;
 var natural = true;
@@ -16,52 +16,51 @@ function startWorker() {
     if (typeof(worker) == "undefined") {
       worker = new Worker("timerWorker.js");
       input = [minutes, seconds];
-      console.log(input[0]);
-      console.log(input[1]);
       worker.postMessage(input);
     }
   }
   worker.onmessage = function(output) {
     minutes = output.data[0];
     seconds = output.data[1];
-    console.log('Message received from worker');
-    startTime();
+    updateTime();
   }
 }
 
 function stopWorker() {
-  worker.terminate();
-  worker = undefined;
+  if (typeof(worker) != "undefined") {
+    worker.terminate();
+    worker = undefined;
+  }
 }
 
-function fruitRipen(x) {
-  reset();
+function fruitRipenAnimation(x) {
+  resetAnimation();
   fruit.style.animation = "ripen " + x + "s ease-in forwards";
 }
 
-function fruitDrop() {
+function fruitDropAnimation() {
   if (!dropCount) {
     fruit.style.animation += ", fruitfall .5s ease-in forwards";
     dropCount = true;
   }
 }
 
-function grow(x) {
-  reset();
+function growAnimation(x) {
+  resetAnimation();
   fruit.style.animation = "grow " + x +"s ease-in forwards";
 }
 
-function pause() {
+function pauseAnimation() {
   if(!natural || breakTime) {
-    fruitDrop();
+    fruitDropAnimation();
   }
   if(!breakTime && !natural) {
-    setTimeout(grow, 500, 1);
+    setTimeout(growAnimation, 500, 1);
   }
     natural = true;
 }
 
-function reset() {
+function resetAnimation() {
   fruit.style.animation = "none";
   fruit.offsetHeight;
   fruit.style.animation = null;
@@ -77,38 +76,28 @@ function breakTimeReset() {
   }
 }
 
-function growOrRipen() {
+function growOrRipenAnimation() {
   var animationSeconds = (60 * minutes) + seconds;
   if (breakTime) {
-    grow(animationSeconds);
+    growAnimation(animationSeconds);
   }
   else {
-    fruitRipen(animationSeconds);
+    fruitRipenAnimation(animationSeconds);
   }
 }
-
-function startTime() {
-  document.getElementById("minutesNum").innerHTML = minutes;
-  if (seconds < 10) {
-    document.getElementById("secondsNum").innerHTML = "0" + seconds;
-  }
-  else {
-    document.getElementById("secondsNum").innerHTML = seconds;
-  }
-  updateTime();
- }
 
 function updateTime() {
 
   if (minutes == 0 && seconds == 0) {
-//!!
+
     stopWorker();
 
     breakTime = !breakTime;
     breakTimeReset();
 
-    startStop = true;
-    pause();
+    currentlyPaused = true;
+
+    pauseAnimation();
 
     control.innerHTML = "Start";
     if (breakTime) {
@@ -125,36 +114,27 @@ function updateTime() {
     }
     document.getElementById('pomodoroControl').value = pomodoroCounter;
     document.getElementById('pomodoroDisplay').innerHTML = pomodoroCounter;
-    document.getElementById('minutes').value = minutes;
-    document.getElementById('seconds').value = "00";
+    updateControlDisplay();
 
     document.getElementById('timer').style.zIndex = '1';
     document.getElementById('pomodoroControl').style.zIndex = '1';
 
   }
+  updateTimeDisplay();
 }
 
 control.addEventListener("click", function()
   {
-    if (startStop) {
-      pomodoroCounter = document.getElementById('pomodoroControl').value;
-
-      minutes = document.getElementById('minutes').value;
-      seconds = document.getElementById('seconds').value;
-
-      if(seconds.length >= 3) {
-        seconds = seconds.substring(seconds.length - 2, seconds.length);
-      }
-
-      if(seconds.substring(0,1) == "0") {
-        seconds = seconds.substring(1,2);
-      }
-
-      checkUser();
+    if (currentlyPaused) {
+      pomodoroCounter = parseInt(document.getElementById('pomodoroControl').value);
+      getTimeFromControl();
+      checkReceivedNumbers();
+      checkUserInput();
+      updateTimeDisplay();
       startWorker();
-      growOrRipen();
-//!!
-      startStop = false;
+      growOrRipenAnimation();
+
+      currentlyPaused = false;
       control.innerHTML = "Pause";
       document.getElementById('timer').style.zIndex = '-1';
       document.getElementById('pomodoroControl').style.zIndex = '-1';
@@ -162,18 +142,12 @@ control.addEventListener("click", function()
 
     else {
       natural = false;
-      pause();
-      document.getElementById('minutes').value = minutes;
-      if(seconds < 10 && seconds > 0) {
-        document.getElementById('seconds').value = '0' + seconds;
-      }
-      else {
-        document.getElementById('seconds').value = seconds;
-      }
-//!!
+      pauseAnimation();
+
       stopWorker();
-      startStop = true;
+      currentlyPaused = true;
       control.innerHTML = "Start";
+      updateControlDisplay();
       document.getElementById('pomodoroControl').value = pomodoroCounter;
       document.getElementById('timer').style.zIndex = '1';
       document.getElementById('pomodoroControl').style.zIndex = '1';
@@ -182,17 +156,50 @@ control.addEventListener("click", function()
 );
 
 document.getElementById("rest").addEventListener("click", function() {
-  if(!startStop) {
-    stopWorker();
-  }
-
   minutes = 0;
   seconds = 0;
   natural = false;
-  startWorker();
+  updateTime();
 });
 
-function checkUser() {
+function updateTimeDisplay() {
+  document.getElementById("minutesNum").innerHTML = minutes;
+  if (seconds < 10) {
+    document.getElementById("secondsNum").innerHTML = "0" + seconds;
+  }
+  else {
+    document.getElementById("secondsNum").innerHTML = seconds;
+  }
+}
+
+function updateControlDisplay() {
+  document.getElementById('minutes').value = minutes;
+  if(seconds < 10) {
+    document.getElementById('seconds').value = '0' + seconds;
+  }
+  else {
+    document.getElementById('seconds').value = seconds;
+  }
+}
+
+function getTimeFromControl() {
+  minutes = parseInt(document.getElementById('minutes').value);
+  seconds = parseInt(document.getElementById('seconds').value);
+}
+
+function checkReceivedNumbers() {
+  if (isNaN(seconds)) {
+    seconds = 0;
+  }
+  if (isNaN(minutes)) {
+    minutes = 0;
+  }
+  if (isNaN(pomodoroCounter)) {
+    pomodoroCounter = 0;
+  }
+}
+
+function checkUserInput() {
   if (minutes < 0) {
     minutes = 0;
   }
@@ -210,6 +217,9 @@ function checkUser() {
   }
   if (pomodoroCounter < 0) {
     pomodoroCounter = 0;
+  }
+  if (minutes == 0 && seconds == 0 && pomodoroCounter == 0) {
+    seconds = 1;
   }
   document.getElementById('pomodoroDisplay').innerHTML = pomodoroCounter;
 }
