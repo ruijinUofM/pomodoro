@@ -55,21 +55,6 @@
           is the light version of lato from google fonts. Anyway, thank you for checking this out!
       </div>
     </div>
-    <script>
-      var menuShow = true;
-      document.getElementById('dropdown').addEventListener("click", function() {
-        if (menuShow) {
-          document.getElementById('features-menu').style.display = 'flex';
-        }
-        else {
-          document.getElementById('features-menu').style.display = 'none';
-        }
-        menuShow = !menuShow;
-      });
-      document.getElementById('content').addEventListener("click", function() {
-        document.getElementById('features-menu').style.display = 'none';
-        menuShow = true;
-      });
-    </script>
+    <script src = "dropdownControl.js"></script>
   </body>
 </html>
