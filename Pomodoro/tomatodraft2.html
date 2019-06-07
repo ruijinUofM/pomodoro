@@ -36,6 +36,7 @@
           </div>
         </div>
         <script>
+        //forces a leading Zero for the seconds if there's only one digit.
           function frontZero(digit) {
             if(digit.value.length == 1) {
               digit.value = '0' + digit.value;

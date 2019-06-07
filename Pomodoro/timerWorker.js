@@ -1,4 +1,11 @@
-/*var minutes;
+/*this is the web worker that times the countdown of the
+timer script.
+*/
+
+/*
+-commented out but saved in case the other version doesn't work-
+-this one depends on setInterval, the other uses dates-
+var minutes;
 var seconds;
 var ongoing;
 onmessage = function(input) {
@@ -19,6 +26,7 @@ onmessage = function(input) {
      postMessage([minutes, seconds]);
   }, 1000);
 }*/
+
 var inputMinutes;
 var inputSeconds;
 var endTime;
@@ -27,7 +35,11 @@ var currentTime;
 var minutesLeft;
 var secondsLeft;
 var ongoing;
-
+/*
+The message sent from the main script gives the minutes and seconds of the timer.
+It uses dates to calculate how much time there is left on the timer. It updates
+in less than a second to make sure the timing is right.
+*/
 onmessage = function(input) {
   inputMinutes = input.data[0];
   inputSeconds = input.data[1];
